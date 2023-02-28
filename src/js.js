@@ -1,10 +1,10 @@
 
 // function test(st, tr) {
 //     const min = 7
-//     if(st * 0.01 < 7 && tr * 0.005  < 7) {
+//     if(st * 0.005 < 7 && tr * 0.01  < 7) {
 //         return min
 //     } else {
-//         return st * 0.01 + tr * 0.01
+//         return st * 0.005 + tr * 0.01
 //     }
 // }
 // console.log(test(50, 50))
@@ -59,4 +59,3 @@
   // console.log(test(1000, 1000, 'Multi'))
   // console.log(test(1000, 1000, 'Single'))
 
-  

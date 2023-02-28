@@ -1,4 +1,5 @@
-import React, { FC, useEffect } from 'react';
+import React from 'react';
+
 
 interface HorizontalBarChartProps {
     storageValue: number;
@@ -6,6 +7,7 @@ interface HorizontalBarChartProps {
     data: {
         name: string;
         value: number;
+        option?: string[];
     }[];
 }
 const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ storageValue, transferValue, data }) => {
@@ -29,6 +31,20 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ storageValue, t
                     <div style={{ width: '100px', textAlign: 'right' }}>
                         {item.name}:
                     </div>
+                    {item.option && (
+                        <div style={{ marginLeft: '10px' }}>
+                            {item.option.map((option, i) => (
+                                <label key={i} style={{ marginRight: '5px' }}>
+                                    <input
+                                        type="radio"
+                                        name={`option-${index}`}
+                                        value={option}
+                                    />
+                                    {option}
+                                </label>
+                            ))}
+                        </div>
+                    )}
                     <div
                         style={{
                             width: item.value,

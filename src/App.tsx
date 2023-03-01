@@ -21,12 +21,15 @@ interface RangeInputState {
 const App: React.FC = () => {
   const [storageValue, setStorageValue] = useState<RangeInputState>({ value: 0 });
   const [transferValue, setTransferValue] = useState<RangeInputState>({ value: 0 });
+  const [backblazeValue, setBackblazeValue] = useState<RangeInputState>({ value: 0 })
+  const [vultrValue, setVulterValue] = useState<RangeInputState>({ value: 0 })
   const data = [
-    { name: 'backblaze.com', value: 700 },
-    { name: ' bunny.net', value: storageValue.value, option: ['HDD', 'SSD'] },
+    { name: 'backblaze.com', value: backblazeValue.value },
+    { name: ' bunny.net', value: 200, option: ['HDD', 'SSD'] },
     { name: 'scaleway.com', value: 30, option: ['Multi', 'Single'] },
-    { name: 'vultr.com', value: 120 },
+    { name: 'vultr.com', value: vultrValue.value },
   ];
+
   const handleStorageChange = (value: number): void => {
     setStorageValue({ value });
   };
@@ -35,16 +38,36 @@ const App: React.FC = () => {
     setTransferValue({ value });
   };
 
+  function functionForBackblaze(storage: number, transfer: number) {
+    const minPrice = 7
+    const result = storage * 0.005 + transfer * 0.01;
 
-  // function functionForBackblaze(storage: number, transfer: number) {
-  //   const minPrice = 7
-  //   if (storage * 0.005 < 7 && transfer * 0.01 < 7) {
-  //     return minPrice
-  //   } else {
-  //     return storage * 0.005 + transfer * 0.01
-  //   }
-  // }
-  // console.log(functionForBackblaze(storageValue.value, transferValue.value))
+    if (result < minPrice) {
+      return Number(minPrice.toFixed(2));
+    } else {
+      return Number(result.toFixed(2));
+    }
+  }
+
+  function functionFroVulter(storage: number, transfer: number) {
+    const storagePrice = 0.01;
+    const transferPrice = 0.01;
+    const minimumPayment = 5;
+
+    const storageCost = storage * storagePrice;
+    const transferCost = transfer * transferPrice;
+
+    const totalCost = storageCost + transferCost;
+    const payment = Number(Math.max(minimumPayment, totalCost).toFixed(2));
+    return payment;
+  }
+
+  useEffect(() => {
+    const result = functionForBackblaze(storageValue.value, transferValue.value);
+    setBackblazeValue({ value: result });
+    const resultVulret = functionFroVulter(storageValue.value, transferValue.value);
+    setVulterValue({ value: resultVulret });
+  }, [storageValue, transferValue])
 
   // function functionForBunny(storage: number, transfer: number, type: string) {
 
@@ -86,23 +109,6 @@ const App: React.FC = () => {
   // }
   // console.log(functionForScaleway(storageValue.value, transferValue.value, 'Multi'))
   // console.log(functionForScaleway(storageValue.value, transferValue.value, 'Single'))
-
-
-  function functionFroVulter(storage: number, transfer: number) {
-    const storagePrice = 0.01;
-    const transferPrice = 0.01;
-    const minimumPayment = 5;
-
-    const storageCost = storage * storagePrice;
-    const transferCost = transfer * transferPrice;
-
-    const totalCost = storageCost + transferCost;
-    const payment = Math.max(minimumPayment, totalCost);
-    return payment;
-  }
-  console.log(functionFroVulter(storageValue.value, transferValue.value))
-  console.log(functionFroVulter(storageValue.value, transferValue.value))
-
 
   return (
     <div style={styles}>

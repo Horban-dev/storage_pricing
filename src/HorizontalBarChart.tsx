@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 interface HorizontalBarChartProps {
     storageValue: number;
     transferValue: number;
@@ -10,11 +9,15 @@ interface HorizontalBarChartProps {
         option?: string[];
     }[];
 }
-const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ storageValue, transferValue, data }) => {
 
+const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
+    storageValue,
+    transferValue,
+    data,
+}) => {
     const sortedData = [...data].sort((a, b) => a.value - b.value);
     const minValue = sortedData[0].value;
-    const chartWidth = 400;
+    const chartWidth = 500;
     const barHeight = 30;
 
     return (
@@ -23,37 +26,39 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({ storageValue, t
                 <div
                     key={index}
                     style={{
-                        display: 'flex',
+                        display: item.option ? 'block' : 'flex',
                         alignItems: 'center',
                         marginBottom: '10px',
+                        justifyContent: 'space-between',
                     }}
                 >
-                    <div style={{ width: '100px', textAlign: 'right' }}>
-                        {item.name}:
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ marginRight: '10px' }}>{item.name}:</div>
+                        <div
+                            style={{
+                                width: item.value,
+                                height: barHeight,
+                                backgroundColor: item.value === minValue ? 'red' : 'blue',
+                                marginRight: '10px',
+                            }}
+                        />
+                        <div>{item.value}</div>
                     </div>
                     {item.option && (
-                        <div style={{ marginLeft: '10px' }}>
+                        <div style={{ flexDirection: 'column' }}>
                             {item.option.map((option, i) => (
-                                <label key={i} style={{ marginRight: '5px' }}>
+                                <label key={i} style={{ marginBottom: '5px' }}>
                                     <input
                                         type="radio"
                                         name={`option-${index}`}
                                         value={option}
+                                        style={{ marginRight: '5px' }}
                                     />
                                     {option}
                                 </label>
                             ))}
                         </div>
                     )}
-                    <div
-                        style={{
-                            width: item.value,
-                            height: barHeight,
-                            backgroundColor: item.value === minValue ? 'red' : 'blue',
-                            marginLeft: '10px',
-                        }}
-                    />
-                    <div style={{ marginLeft: '10px' }}>{item.value}</div>
                 </div>
             ))}
         </div>

@@ -8,18 +8,18 @@ interface HorizontalBarChartProps {
         value: number;
         option?: string[];
     }[];
+    scalewayOption?: string;
+    handleScalewayOptionChange?: any;
 }
 
 const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
-    storageValue,
-    transferValue,
     data,
+    handleScalewayOptionChange
 }) => {
     const sortedData = [...data].sort((a, b) => a.value - b.value);
     const minValue = sortedData[0].value;
-    const chartWidth = 500;
+    const chartWidth = 700;
     const barHeight = 30;
-
     return (
         <div style={{ width: chartWidth }}>
             {data.map((item, index) => (
@@ -33,12 +33,12 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
                     }}
                 >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div style={{ marginRight: '10px' }}>{item.name}:</div>
+                        <div style={{ marginRight: '10px', width: '150px' }}>{item.name}:</div>
                         <div
                             style={{
-                                width: item.value,
+                                width: item.value * 5,
                                 height: barHeight,
-                                backgroundColor: item.value === minValue ? 'red' : 'blue',
+                                backgroundColor: item.value === minValue ? 'red' : 'grey',
                                 marginRight: '10px',
                             }}
                         />
@@ -52,6 +52,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
                                         type="radio"
                                         name={`option-${index}`}
                                         value={option}
+                                        onChange={(e) => handleScalewayOptionChange(e, item.name)}
                                         style={{ marginRight: '5px' }}
                                     />
                                     {option}

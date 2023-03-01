@@ -17,26 +17,48 @@ const marks: SliderMarks = {
 interface RangeInputState {
   value: number;
 }
+interface OptionValue {
+  value: string;
+}
 
 const App: React.FC = () => {
   const [storageValue, setStorageValue] = useState<RangeInputState>({ value: 0 });
   const [transferValue, setTransferValue] = useState<RangeInputState>({ value: 0 });
   const [backblazeValue, setBackblazeValue] = useState<RangeInputState>({ value: 0 })
   const [vultrValue, setVulterValue] = useState<RangeInputState>({ value: 0 })
+  const [bunnyValue, setBunnyValue] = useState<RangeInputState>({ value: 0 })
+  const [bunnyOption, setBunnyOption] = useState<OptionValue>({ value: "" });
+
+  const [scalewayValue, setScalewayValue] = useState<RangeInputState>({ value: 0 })
+  const [scalewayOption, setScalewayOption] = useState<OptionValue>({ value: "" });
+
+
+
   const data = [
     { name: 'backblaze.com', value: backblazeValue.value },
-    { name: ' bunny.net', value: 200, option: ['HDD', 'SSD'] },
-    { name: 'scaleway.com', value: 30, option: ['Multi', 'Single'] },
+    { name: 'bunny.net', value: bunnyValue.value, option: ['HDD', 'SSD'] },
+    { name: 'scaleway.com', value: scalewayValue.value, option: ['Multi', 'Single'] },
     { name: 'vultr.com', value: vultrValue.value },
   ];
 
   const handleStorageChange = (value: number): void => {
     setStorageValue({ value });
   };
-
   const handleTransferChange = (value: number): void => {
     setTransferValue({ value });
   };
+
+  const handleScalewayOptionChange = (event: any, name: string): void => {
+    if (name === 'scaleway.com') {
+      const resultScaleway = functionForScaleway(storageValue.value, transferValue.value, event.target.value)
+      setScalewayValue({ value: resultScaleway });
+      setScalewayOption({ value: event.target.value })
+    } else if (name === 'bunny.net') {
+      const resultBunny = functionForBunny(storageValue.value, transferValue.value, event.target.value)
+      setBunnyValue({ value: resultBunny });
+      setBunnyOption({ value: event.target.value })
+    }
+  }
 
   function functionForBackblaze(storage: number, transfer: number) {
     const minPrice = 7
@@ -61,54 +83,50 @@ const App: React.FC = () => {
     const payment = Number(Math.max(minimumPayment, totalCost).toFixed(2));
     return payment;
   }
+  function functionForBunny(storage: number, transfer: number, type: string | null) {
+    let storagePrice: any;
+    let transferPrice
+    if (type === "HDD") {
+      storagePrice = 0.01;
+    } else if (type === "SSD") {
+      storagePrice = 0.02;
+    }
+    transferPrice = 0.01;
+
+    const totalPrice = (transfer * transferPrice) + (storage * storagePrice);
+
+    if (totalPrice < 10) {
+      return Number(totalPrice.toFixed(2))
+    } else {
+      return 10;
+    }
+  }
+  function functionForScaleway(storage: number, transfer: number, option: string) {
+    const baseStorage = 75;
+    const baseTransfer = 75;
+    const storageRate = option === 'Multi' ? 0.06 : 0.03;
+    const transferRate = 0.02;
+    let storagePrice = 0;
+    if (storage > baseStorage) {
+      storagePrice = (storage - baseStorage) * storageRate;
+    }
+    let transferPrice = 0;
+    if (transfer > baseTransfer) {
+      transferPrice = (transfer - baseTransfer) * transferRate;
+    }
+    return Number((storagePrice + transferPrice).toFixed(2));
+  }
 
   useEffect(() => {
     const result = functionForBackblaze(storageValue.value, transferValue.value);
     setBackblazeValue({ value: result });
     const resultVulret = functionFroVulter(storageValue.value, transferValue.value);
     setVulterValue({ value: resultVulret });
+    const resultScaleway = functionForScaleway(storageValue.value, transferValue.value, scalewayOption.value)
+    setScalewayValue({ value: resultScaleway });
+    const resultBunny = functionForBunny(storageValue.value, transferValue.value, bunnyOption.value)
+    setBunnyValue({ value: resultBunny });
   }, [storageValue, transferValue])
-
-  // function functionForBunny(storage: number, transfer: number, type: string) {
-
-  //   let storagePrice: any;
-  //   let transferPrice
-  //   if (type === "HDD") {
-  //     storagePrice = 0.01;
-  //   } else if (type === "SSD") {
-  //     storagePrice = 0.02;
-  //   }
-  //   transferPrice = 0.01;
-
-  //   const totalPrice = (transfer * transferPrice) + (storage * storagePrice);
-
-  //   if (totalPrice < 10) {
-  //     return totalPrice;
-  //   } else {
-  //     return 10;
-  //   }
-  // }
-  // console.log(functionForBunny(storageValue.value, transferValue.value, 'SSD'))
-  // console.log(functionForBunny(storageValue.value, transferValue.value, 'HDD'))
-
-
-  // function functionForScaleway(storage: number, transfer: number, option: string) {
-  //   const baseStorage = 75;
-  //   const baseTransfer = 75;
-  //   const storageRate = option === 'Multi' ? 0.06 : 0.03;
-  //   const transferRate = 0.02;
-  //   let storagePrice = 0;
-  //   if (storage > baseStorage) {
-  //     storagePrice = (storage - baseStorage) * storageRate;
-  //   }
-  //   let transferPrice = 0;
-  //   if (transfer > baseTransfer) {
-  //     transferPrice = (transfer - baseTransfer) * transferRate;
-  //   }
-  //   return storagePrice + transferPrice;
-  // }
-  // console.log(functionForScaleway(storageValue.value, transferValue.value, 'Multi'))
-  // console.log(functionForScaleway(storageValue.value, transferValue.value, 'Single'))
 
   return (
     <div style={styles}>
@@ -123,7 +141,13 @@ const App: React.FC = () => {
             <Slider value={transferValue.value} onChange={handleTransferChange} style={{ width: '200px' }} marks={marks} defaultValue={0} max={1000} />
           </div>
         </div>
-        <HorizontalBarChart storageValue={storageValue.value} transferValue={transferValue.value} data={data} />
+        <HorizontalBarChart
+          storageValue={storageValue.value}
+          transferValue={transferValue.value}
+          data={data}
+          scalewayOption={scalewayOption.value}
+          handleScalewayOptionChange={handleScalewayOptionChange}
+        />
       </MyContainer>
     </div>
 

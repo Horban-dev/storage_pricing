@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.slider {
+  width: 200px;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 768px) {
+  .slider {
+      width: 150px;
+  }
+}

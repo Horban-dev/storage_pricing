@@ -3,7 +3,7 @@ import { Slider } from 'antd';
 import MyContainer from './Container';
 import type { SliderMarks } from 'antd/es/slider';
 import HorizontalBarChart from './HorizontalBarChart';
-
+import style from './index.css';
 const styles = {
   minHeight: '100vh',
   display: 'flex',
@@ -132,11 +132,11 @@ const App: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '60px' }}>
           <div>
             <span>{`Storage: ${storageValue.value} GB`}</span>
-            <Slider value={storageValue.value} onChange={handleStorageChange} style={{ width: '200px' }} marks={marks} defaultValue={0} max={1000} />
+            <Slider value={storageValue.value} onChange={handleStorageChange} className={style.slider} marks={marks} defaultValue={0} max={1000} />
           </div>
           <div>
             <span>{`Transfer: ${transferValue.value} GB`}</span>
-            <Slider value={transferValue.value} onChange={handleTransferChange} style={{ width: '200px' }} marks={marks} defaultValue={0} max={1000} />
+            <Slider value={transferValue.value} onChange={handleTransferChange} className={style.slider} marks={marks} defaultValue={0} max={1000} />
           </div>
         </div>
         <HorizontalBarChart

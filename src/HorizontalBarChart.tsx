@@ -1,5 +1,5 @@
 import React from 'react';
-
+import classes from './styles.css'
 interface HorizontalBarChartProps {
   storageValue: number;
   transferValue: number;
@@ -18,35 +18,28 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
 }) => {
   const sortedData = [...data].sort((a, b) => a.value - b.value);
   const minValue = sortedData[0].value;
-  const chartWidth = 700;
   const barHeight = 30;
   return (
-    <div style={{ width: chartWidth }}>
+    <div className={classes.main}>
       {data.map((item, index) => (
         <div
           key={index}
-          style={{
-            display: item.option ? 'block' : 'flex',
-            alignItems: 'center',
-            marginBottom: '10px',
-            justifyContent: 'space-between',
-          }}
+          className={classes.container}
         >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ marginRight: '10px', width: '150px' }}>{item.name}:</div>
+          <div className={classes.underContainer}>
+            <div className={classes.name}>{item.name}:</div>
             <div
               style={{
                 width: item.value * 5,
                 height: barHeight,
                 backgroundColor: item.value === minValue ? 'red' : 'grey',
                 marginRight: '10px',
-
               }}
             />
             <div>{`${item.value}$`}</div>
           </div>
           {item.option && (
-            <div style={{ flexDirection: 'column' }}>
+            <div className={classes.radio}>
               {item.option.map((option, i) => (
                 <label key={i} style={{ marginBottom: '5px' }}>
                   <input
@@ -54,7 +47,7 @@ const HorizontalBarChart: React.FC<HorizontalBarChartProps> = ({
                     name={`option-${index}`}
                     value={option}
                     onChange={(e) => handleScalewayOptionChange(e, item.name)}
-                    style={{ marginRight: '5px' }}
+                    className={classes.inputRadio}
                   />
                   {option}
                 </label>

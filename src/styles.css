@@ -1,0 +1,6 @@
+.container {
+  display: block,
+  align-items: center,
+  margin-bottom: 10 px,
+  justify-content: space-between,
+}

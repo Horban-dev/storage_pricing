@@ -32,13 +32,11 @@ const App: React.FC = () => {
   const [scalewayValue, setScalewayValue] = useState<RangeInputState>({ value: 0 })
   const [scalewayOption, setScalewayOption] = useState<OptionValue>({ value: "" });
 
-
-
   const data = [
-    { name: 'backblaze.com', value: backblazeValue.value },
-    { name: 'bunny.net', value: bunnyValue.value, option: ['HDD', 'SSD'] },
-    { name: 'scaleway.com', value: scalewayValue.value, option: ['Multi', 'Single'] },
-    { name: 'vultr.com', value: vultrValue.value },
+    { name: 'backblaze.com', icon: 'src', value: backblazeValue.value },
+    { name: 'bunny.net', icon: 'src', value: bunnyValue.value, option: ['HDD', 'SSD'] },
+    { name: 'scaleway.com', icon: 'src', value: scalewayValue.value, option: ['Multi', 'Single'] },
+    { name: 'vultr.com', icon: 'src', value: vultrValue.value },
   ];
 
   const handleStorageChange = (value: number): void => {

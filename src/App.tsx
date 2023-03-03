@@ -27,9 +27,8 @@ const App: React.FC = () => {
   const [backblazeValue, setBackblazeValue] = useState<RangeInputState>({ value: 0 })
   const [vultrValue, setVulterValue] = useState<RangeInputState>({ value: 0 })
   const [bunnyValue, setBunnyValue] = useState<RangeInputState>({ value: 0 })
-  const [bunnyOption, setBunnyOption] = useState<OptionValue>({ value: "" });
-
   const [scalewayValue, setScalewayValue] = useState<RangeInputState>({ value: 0 })
+  const [bunnyOption, setBunnyOption] = useState<OptionValue>({ value: "" });
   const [scalewayOption, setScalewayOption] = useState<OptionValue>({ value: "" });
 
   const data = [

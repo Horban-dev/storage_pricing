@@ -1,4 +1,3 @@
-
 // function test(st, tr) {
 //     const min = 7
 //     if(st * 0.005 < 7 && tr * 0.01  < 7) {
@@ -59,3 +58,25 @@
   // console.log(test(1000, 1000, 'Multi'))
   // console.log(test(1000, 1000, 'Single'))
 
+
+
+
+//   const data = [
+//     { name: 'backblaze.com', icon: 'src', value: 10 },
+//     { name: 'bunny.net', icon: 'src', value: 5, option: 
+//         [{subname: 'HDD', values: 0.5}, {subname: 'SSD', values: 0.2}]},
+//     { name: 'scaleway.com', icon: 'src', value: 3, option: 
+//     [{subname: 'Multi', values: 4}, {subname: 'Single', values: 10}]},
+//     { name: 'vultr.com', icon: 'src', value: 7 },
+//   ];
+// function modifyData(data, subname) {
+//   return data.map(obj => {
+//     if (obj.option && obj.option.find(opt => opt.subname === subname)) {
+//       const opt = obj.option.find(opt => opt.subname === subname);
+//       obj.value = opt.values * obj.value;
+//     }
+//     return obj;
+//   });
+// }
+// const ff = modifyData(data, 'SSD')
+// console.log(ff[1])

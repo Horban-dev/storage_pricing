@@ -23,8 +23,8 @@
 }
 @media only screen and (min-width: 360px) and (max-width: 768px){
   .main {
-    height: 50%;
-    width: 65%;
+    height: 58%;
+    width: 100%;
     position: relative;
     top: 20px;
     transform: rotate(-0.25turn);
@@ -32,7 +32,6 @@
   .container {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
     position: relative;
     justify-content: space-between;
     
@@ -45,7 +44,7 @@
 
   }
   .under-container {
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .radio {
     transform: rotate(90deg);
@@ -59,3 +58,15 @@
   }
 }
 
+@media only screen and (min-width: 500px) and (max-width: 620px) {
+  .main {
+    height: 52%;
+    width: 88%;
+  }
+}
+@media only screen and (min-width: 621px) and (max-width: 800px) {
+  .main {
+    height: 40%;
+    width: 83%;
+  }
+}

@@ -15,7 +15,12 @@ code {
   width: 200px;
 }
 
-@media only screen and (min-width: 360px) and (max-width: 768px) {
+@media only screen and (min-width: 360px) and (max-width: 500px) {
+  .slider {
+      width: 110px;
+  }
+}
+@media only screen and (min-width: 501px) and (max-width: 768px) {
   .slider {
       width: 150px;
   }

@@ -45,7 +45,7 @@ const App: React.FC = () => {
     setTransferValue({ value });
   };
 
-  const handleScalewayOptionChange = (event: any, name: string): void => {
+  const handleScalewayOptionChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, name: string): void => {
     if (name === 'scaleway.com') {
       const resultScaleway = functionForScaleway(storageValue.value, transferValue.value, event.target.value)
       setScalewayValue({ value: resultScaleway });
@@ -80,15 +80,15 @@ const App: React.FC = () => {
     const payment = Number(Math.max(minimumPayment, totalCost).toFixed(2));
     return payment;
   }
+
   function functionForBunny(storage: number, transfer: number, type: string | null) {
-    let storagePrice: any;
-    let transferPrice
+    let storagePrice: number = 0;
+    let transferPrice: number = 0.01;
     if (type === "HDD") {
       storagePrice = 0.01;
     } else if (type === "SSD") {
       storagePrice = 0.02;
     }
-    transferPrice = 0.01;
 
     const totalPrice = (transfer * transferPrice) + (storage * storagePrice);
 
@@ -98,6 +98,7 @@ const App: React.FC = () => {
       return 10;
     }
   }
+
   function functionForScaleway(storage: number, transfer: number, option: string) {
     const baseStorage = 75;
     const baseTransfer = 75;
